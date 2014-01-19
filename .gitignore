@@ -1,0 +1,14 @@
+auto-save-list/
+backups/
+elpa/
+eshell/
+url/
+vendor/
+
+.bookmarks
+.visited-files
+local.el
+custom.el
+ac-comphist.dat
+ede-projects.el
+places
