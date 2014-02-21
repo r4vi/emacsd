@@ -10,30 +10,43 @@
 
 ;; Add in your own as you wish:
 (defvar my-packages 
-  '(starter-kit-lisp
-    starter-kit
-   starter-kit-bindings
-   clojure-mode
-   auto-complete
+ '(4clojure
    ac-nrepl
-   org
-   rainbow-delimiters
-   evil 
-   evil-leader
-   evil-tabs evil-paredit surround
-   smooth-scrolling
-   elscreen ace-jump-mode
-   helm helm-descbinds
-   key-chord
-   recentf smart-mode-line
-   highlight
-   cider
-   dash
-   cider-tracing
+   ace-jump-mode
+   auto-complete
    cider-decompile
-   pkg-info
-   magit
-   )
+   cider-tracing
+   clj-refactor
+   clojure-project-mode
+   dirtree
+   clojure-test-mode
+   cider
+   clojurescript-mode
+   coffee-mode
+   evil-leader
+   evil-paredit
+   evil-tabs
+   elscreen
+   evil
+   flymake
+   flymake-coffee
+   flymake-python-pyflakes
+   flymake-sass
+   flymake-easy
+   git-rebase-mode
+   helm-descbinds
+   helm-ls-git
+   helm-projectile
+   helm
+   highlight
+   jade-mode
+   javap-mode
+   key-chord
+   kibit-mode
+   markdown-mode
+   multiple-cursors
+   nrepl-eval-sexp-fu nrepl-ritz fringe-helper nrepl clojure-mode popup project-mode levenshtein projectile pkg-info epl protobuf-mode python-mode rainbow-delimiters request s sass-mode haml-mode smart-mode-line smartparens dash smooth-scrolling starter-kit-bindings starter-kit-lisp elisp-slime-nav cl-lib starter-kit magit ido-ubiquitous smex find-file-in-project idle-highlight-mode paredit surround sws-mode undo-tree yasnippet zenburn-theme)
+
   "A list of packages to ensure are installed at launch.")
 
 (dolist (p my-packages)
@@ -205,6 +218,16 @@ This one changes the cursor color on each blink. Define colors in `blink-cursor-
 (require 'evil-leader)
 ;(require 'cider-interaction)
 (evil-leader/set-key-for-mode 'clojure-mode "x" 'cider-eval-expression-at-point)
+(evil-leader/set-key "b" 'helm-buffers-list)
+(evil-leader/set-key "c" 'comment-or-uncomment-region)
+(evil-leader/set-key "q" 'nrepl-popup-buffer-quit)
+(require 'evil-states)
+(require 'evil-ex)
+(require 'evil-commands)
+
+(define-key evil-motion-state-map (kbd "C-^") 'buffer-menu)
+(evil-ex-define-cmd "b[uffer]" 'buffer-menu)
+
 
 (when (display-graphic-p)
   (set-face-attribute 'default nil :font "Source Code Pro-11"))
@@ -245,3 +268,8 @@ This one changes the cursor color on each blink. Define colors in `blink-cursor-
  '(rainbow-delimiters-depth-6-face ((t (:foreground "magenta1"))))
  '(rainbow-delimiters-depth-8-face ((t (:foreground "LightPink1"))))
  '(rainbow-delimiters-depth-9-face ((t (:foreground "goldenrod")))))
+
+
+(autoload 'dirtree "dirtree" "Add directory to tree view" t)
+
+(add-to-list 'auto-mode-alist '("\\.sls\\'" . yaml-mode))
