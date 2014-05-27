@@ -11,9 +11,7 @@
 ;; Add in your own as you wish:
 (defvar my-packages 
  '(4clojure
-   ac-nrepl
    ace-jump-mode
-   auto-complete
    cider-decompile
    cider-tracing
    clj-refactor
@@ -45,28 +43,14 @@
    kibit-mode
    markdown-mode
    multiple-cursors
-   nrepl-eval-sexp-fu nrepl-ritz fringe-helper nrepl clojure-mode popup project-mode levenshtein projectile pkg-info epl protobuf-mode python-mode rainbow-delimiters request s sass-mode haml-mode smart-mode-line smartparens dash smooth-scrolling starter-kit-bindings starter-kit-lisp elisp-slime-nav cl-lib starter-kit magit ido-ubiquitous smex find-file-in-project idle-highlight-mode paredit surround sws-mode undo-tree yasnippet zenburn-theme)
-
+   fringe-helper clojure-mode popup project-mode levenshtein projectile pkg-info epl protobuf-mode python-mode rainbow-delimiters request s sass-mode haml-mode smart-mode-line smartparens dash smooth-scrolling starter-kit-bindings starter-kit-lisp elisp-slime-nav cl-lib starter-kit magit ido-ubiquitous smex find-file-in-project idle-highlight-mode paredit surround sws-mode undo-tree yasnippet zenburn-theme)
   "A list of packages to ensure are installed at launch.")
 
 (dolist (p my-packages)
   (when (not (package-installed-p p))
     (package-install p))) 
 
-(require 'ac-nrepl)
-;;(add-hook 'nrepl-mode-hook 'ac-nrepl-setup)
-;;(add-hook 'nrepl-interaction-mode-hook 'ac-nrepl-setup)
-(eval-after-load "auto-complete"
-     '(add-to-list 'ac-modes 'nrepl-mode))
-(defun set-auto-complete-as-completion-at-point-function ()
-  (setq completion-at-point-functions '(auto-complete)))
-
-(add-hook 'auto-complete-mode-hook 'set-auto-complete-as-completion-at-point-function)
-
-;;(add-hook 'nrepl-mode-hook 'set-auto-complete-as-completion-at-point-function)
-;;(add-hook 'nrepl-interaction-mode-hook 'set-auto-complete-as-completion-at-point-function)
-;;(define-key nrepl-interaction-mode-map (kbd "C-c C-d") 'ac-nrepl-popup-doc)
-(add-hook 'prog-mode-hook 'auto-complete-mode)
+(add-hook 'after-init-hook 'global-company-mode)
 
 (add-hook 'cider-repl-mode-hook
             'cider-turn-on-eldoc-mode)
@@ -76,6 +60,8 @@
 (eval-after-load 'paredit '(define-key paredit-mode-map (kbd "C-M-[") 'paredit-backward-barf-sexp))
 (eval-after-load 'paredit '(define-key paredit-mode-map (kbd "M-]") 'paredit-forward-slurp-sexp))
 (eval-after-load 'paredit '(define-key paredit-mode-map (kbd "M-[") 'paredit-backward-slurp-sexp))
+
+(eval-after-load 'company '(add-to-list 'company-backends 'company-cider))
 
 (setq org-directory "~/Dropbox/org/")
 (setq org-mobile-directory "~/Dropbox/org/m/")
@@ -88,7 +74,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Early requirements.
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(require 'auto-complete)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Customizations (from M-x customze-*)
@@ -98,15 +83,12 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(ac-auto-show-menu t)
- '(ac-auto-start t)
- '(ac-show-menu-immediately-on-auto-complete t)
  '(coffee-tab-width 2)
- '(ede-project-directories (quote ("/home/ravi/code/kitekit.pckl.me")))
+ '(company-backends (quote (company-elisp company-bbdb company-nxml company-css company-eclim company-semantic company-clang company-xcode company-ropemacs company-cmake company-capf (company-dabbrev-code company-gtags company-etags company-keywords) company-oddmuse company-files company-dabbrev)))
  '(max-lisp-eval-depth 6000)
  '(max-specpdl-size 3000)
- '(nrepl-hide-special-buffers t)
- '(nrepl-popup-stacktraces-in-repl t)
+ ;;'(nrepl-hide-special-buffers t)
+ ;;'(nrepl-popup-stacktraces-in-repl t)
  '(recentf-max-saved-items 50))
  
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -123,7 +105,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Nice-to-haves...
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(global-auto-complete-mode t)
 (global-surround-mode t)
 
 (helm-mode t)
@@ -147,7 +128,6 @@
 ;;; Filetype-style hooks.
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defun standard-lisp-modes ()
-  (require 'nrepl-eval-sexp-fu)
   (rainbow-delimiters-mode t)
   (require 'evil-paredit)
   (paredit-mode t)
@@ -177,21 +157,18 @@
                       (modify-syntax-entry char "w" clojure-mode-syntax-table))
                    '(?- ?_ ?/ ?< ?> ?: ?' ?.))
   
-             (require 'clojure-test-mode)
+             ;(require 'clojure-test-mode)
   
-             (require 'ac-nrepl)
-             (add-hook 'cider-mode-hook 'cider-turn-on-eldoc-mode)
+             ;(add-hook 'cider-mode-hook 'cider-turn-on-eldoc-mode)
              (add-hook 'cider-repl-mode-hook 'paredit-mode)
              (add-hook 'cider-repl-mode-hook 'rainbow-delimiters-mode)
-             (add-hook 'nrepl-mode-hook 'ac-nrepl-setup)
-             (add-hook 'nrepl-interaction-mode-hook 'ac-nrepl-setup)
-             (add-hook 'nrepl-interaction-mode-hook 'nrepl-turn-on-eldoc-mode)
-             (add-to-list 'ac-modes 'nrepl-mode)))
+             ))
 
 (evil-define-key 'normal clojure-mode-map
   "\M-q" 'paredit-reindent-defun
-  "gK" 'nrepl-src
-  "K"  'ac-nrepl-popup-doc)
+  ;;"gK" 'nrepl-src
+  ;;"K"  'ac-nrepl-popup-doc
+  )
 
 (require 'smooth-scrolling)
 (setq smooth-scroll-margin 5)
@@ -219,8 +196,9 @@ This one changes the cursor color on each blink. Define colors in `blink-cursor-
 ;(require 'cider-interaction)
 (evil-leader/set-key-for-mode 'clojure-mode "x" 'cider-eval-expression-at-point)
 (evil-leader/set-key "b" 'helm-buffers-list)
+(evil-leader/set-key "p" 'helm-projectile)
+(evil-leader/set-key "q" 'cider-popup-buffer-quit)
 (evil-leader/set-key "c" 'comment-or-uncomment-region)
-(evil-leader/set-key "q" 'nrepl-popup-buffer-quit)
 (require 'evil-states)
 (require 'evil-ex)
 (require 'evil-commands)
@@ -270,7 +248,8 @@ This one changes the cursor color on each blink. Define colors in `blink-cursor-
  '(rainbow-delimiters-depth-9-face ((t (:foreground "goldenrod")))))
 
 
+(load-file "~/.emacs.d/lib/eval-sexp-fu.el")
+(load-file "~/.emacs.d/lib/highlight-flash-conf.el")
 (autoload 'dirtree "dirtree" "Add directory to tree view" t)
-
 (add-to-list 'auto-mode-alist '("\\.sls\\'" . yaml-mode))
 (server-start)
