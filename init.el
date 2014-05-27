@@ -16,6 +16,7 @@
    cider-tracing
    clj-refactor
    clojure-project-mode
+   dirtree
    clojure-test-mode
    cider
    clojurescript-mode
@@ -43,7 +44,6 @@
    markdown-mode
    multiple-cursors
    fringe-helper clojure-mode popup project-mode levenshtein projectile pkg-info epl protobuf-mode python-mode rainbow-delimiters request s sass-mode haml-mode smart-mode-line smartparens dash smooth-scrolling starter-kit-bindings starter-kit-lisp elisp-slime-nav cl-lib starter-kit magit ido-ubiquitous smex find-file-in-project idle-highlight-mode paredit surround sws-mode undo-tree yasnippet zenburn-theme)
-
   "A list of packages to ensure are installed at launch.")
 
 (dolist (p my-packages)
@@ -198,6 +198,7 @@ This one changes the cursor color on each blink. Define colors in `blink-cursor-
 (evil-leader/set-key "b" 'helm-buffers-list)
 (evil-leader/set-key "p" 'helm-projectile)
 (evil-leader/set-key "q" 'cider-popup-buffer-quit)
+(evil-leader/set-key "c" 'comment-or-uncomment-region)
 (require 'evil-states)
 (require 'evil-ex)
 (require 'evil-commands)
@@ -249,3 +250,5 @@ This one changes the cursor color on each blink. Define colors in `blink-cursor-
 
 (load-file "~/.emacs.d/lib/eval-sexp-fu.el")
 (load-file "~/.emacs.d/lib/highlight-flash-conf.el")
+(autoload 'dirtree "dirtree" "Add directory to tree view" t)
+(add-to-list 'auto-mode-alist '("\\.sls\\'" . yaml-mode))
