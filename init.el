@@ -198,6 +198,7 @@ This one changes the cursor color on each blink. Define colors in `blink-cursor-
 (evil-leader/set-key "b" 'helm-buffers-list)
 (evil-leader/set-key "p" 'helm-projectile)
 (evil-leader/set-key "q" 'cider-popup-buffer-quit)
+(evil-leader/set-key "v" 'clipboard-yank)
 (evil-leader/set-key "c" 'comment-or-uncomment-region)
 (require 'evil-states)
 (require 'evil-ex)
