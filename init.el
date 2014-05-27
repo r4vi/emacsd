@@ -78,7 +78,7 @@
 (eval-after-load 'paredit '(define-key paredit-mode-map (kbd "M-[") 'paredit-backward-slurp-sexp))
 
 (setq org-directory "~/Dropbox/org/")
-(setq org-mobile-directory "~/Dropbox/org/")
+(setq org-mobile-directory "~/Dropbox/org/m/")
 (setq org-mobile-inbox-for-pull "~/Dropbox/org/log.org")
 (setq org-agenda-files '("~/Dropbox/org/log.org"))
 
@@ -199,7 +199,7 @@
 (defvar blink-cursor-colors (list  "#92c48f" "#6785c5" "#be369c" "#d9ca65")
   "On each blink the cursor will cycle to the next color in this list.")
 
-(setq blink-cursor-count 500)
+(setq blink-cursor-count 300)
 (defun blink-cursor-timer-function ()
   "Zarza wrote this cyberpunk variant of timer `blink-cursor-timer'. 
 Warning: overwrites original version in `frame.el'.
@@ -273,3 +273,4 @@ This one changes the cursor color on each blink. Define colors in `blink-cursor-
 (autoload 'dirtree "dirtree" "Add directory to tree view" t)
 
 (add-to-list 'auto-mode-alist '("\\.sls\\'" . yaml-mode))
+(server-start)
